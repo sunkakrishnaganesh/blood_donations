@@ -841,6 +841,18 @@
             gap: 1rem;
             margin-top: 1.5rem;
         }
+        .form-success {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        }
+
+        #success-message:target,
+        .form-success.show {
+        display: block;
+        opacity: 1;
+        animation: fadeIn 0.5s ease;
+        }
 
         .social-links a {
             display: flex;
@@ -1786,6 +1798,26 @@
         document.getElementById('donation-form').addEventListener('submit', function(e) {
         console.log('Form submitted!');
         // Optional: Add form validation here
+        });
+        // Show success message when URL has #success-message
+        window.addEventListener('load', function() {
+        if (window.location.hash === '#success-message') {
+            // Hide all form steps
+            document.querySelectorAll('.step').forEach(step => {
+            step.style.display = 'none';
+            });
+            
+            // Hide form actions
+            document.querySelector('.form-actions').style.display = 'none';
+            
+            // Show success message
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Scroll to message smoothly
+            setTimeout(() => {
+            document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
         });
         function submitForm() {
             const formData = new FormData();
